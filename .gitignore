@@ -1,0 +1,81 @@
+# -------------------------
+# Laravel / PHP / Composer
+# -------------------------
+/vendor/
+phpunit.xml
+.phpunit.result.cache
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Laravel storage
+/storage/*.key
+/storage/*.cache
+/storage/logs/
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/app/public/*
+
+# Laravel mix / Vite builds
+/public/build
+/public/hot
+
+# -------------------------
+# Node / npm / Yarn
+# -------------------------
+/node_modules/
+npm-debug.log
+yarn-error.log
+
+# -------------------------
+# Docker
+# -------------------------
+# containers, volumes, etc.
+docker-compose.override.yml
+docker-compose.local.yml
+docker-compose.dev.yml
+/.docker
+/.docker/*
+/docker/*
+/docker-compose.yml.save
+
+# nginx local templates
+_docker/nginx/templates/*.conf
+!_docker/nginx/templates/*.example
+
+# MySQL / Docker DB temp files
+tmp/
+*.ibd
+*.redo
+*#ib_*
+*#innodb_*
+
+# if using Laravel Sail:
+/vendor/bin/sail
+
+# -------------------------
+# IDE / editors
+# -------------------------
+
+# PhpStorm / JetBrains
+/.idea
+/.fleet
+
+# VSCode
+/.vscode
+
+# -------------------------
+# System files (macOS, etc)
+# -------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------
+# Other
+# -------------------------
+auth.json
+Homestead.json
+Homestead.yaml
