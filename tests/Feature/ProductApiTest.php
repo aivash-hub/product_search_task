@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -51,5 +52,55 @@ class ProductApiTest extends TestCase
                 'message',
                 'errors' => ['rating_from'],
             ]);
+    }
+
+    public function test_can_sort_products_by_price_desc(): void
+    {
+        Product::factory()->create(['price' => 100]);
+        Product::factory()->create(['price' => 300]);
+        Product::factory()->create(['price' => 200]);
+
+        $response = $this->getJson('/api/products?sort=price_desc');
+
+        $response->assertStatus(200);
+
+        $prices = collect($response->json('data'))
+            ->pluck('price')
+            ->all();
+
+        $this->assertSame([300, 200, 100], $prices);
+    }
+
+    public function test_can_change_items_per_page(): void
+    {
+        Product::factory()->count(15)->create();
+
+        $response = $this->getJson('/api/products?per_page=5');
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonCount(5, 'data')
+            ->assertJsonPath('per_page', 5)
+            ->assertJsonPath('total', 15);
+    }
+
+    public function test_can_filter_products_by_category(): void
+    {
+        $categoryA = Category::factory()->create();
+        $categoryB = Category::factory()->create();
+
+        Product::factory()->count(2)->create([
+            'category_id' => $categoryA->id,
+        ]);
+
+        Product::factory()->count(1)->create([
+            'category_id' => $categoryB->id,
+        ]);
+
+        $response = $this->getJson('/api/products?category_id=' . $categoryA->id);
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonCount(2, 'data');
     }
 }
