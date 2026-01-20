@@ -79,3 +79,9 @@ Thumbs.db
 auth.json
 Homestead.json
 Homestead.yaml
+
+# -------------------------
+# Swagger / OpenAPI
+# -------------------------
+/storage/api-docs
+/public/docs
