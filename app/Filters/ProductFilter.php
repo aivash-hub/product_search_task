@@ -24,9 +24,6 @@ class ProductFilter
             ->when(array_key_exists('in_stock', $filters), fn ($q) =>
                 $q->where('in_stock', $filters['in_stock'])
             )
-            ->when(array_key_exists('in_stock', $filters), fn ($q) =>
-                $q->where('in_stock', filter_var($filters['in_stock'], FILTER_VALIDATE_BOOLEAN))
-            )
             ->when($filters['rating_from'] ?? null, fn ($q, $value) =>
                 $q->where('rating', '>=', $value)
             );

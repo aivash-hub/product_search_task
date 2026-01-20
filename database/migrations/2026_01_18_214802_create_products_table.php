@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
 
             $table->string('name');
-            $table->fullText('name');
+            if (Schema::getConnection()->getDriverName() === 'mysql') {
+                $table->fullText('name');
+            }
 
             $table->decimal('price', 10, 2);
             $table->decimal('rating', 3, 2)->default(0.00);
